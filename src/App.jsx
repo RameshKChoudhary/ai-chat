@@ -1,4 +1,4 @@
-import React, { HashRouter, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { FiMenu } from "react-icons/fi";
 import Ram2 from "./assets/ram.webp";
@@ -343,7 +343,7 @@ function App() {
     return text.substring(0, maxLength) + '...';
   };
 
-  return (<><HashRouter>
+  return (
     <div
       className="bodydiv"
       style={{
@@ -462,7 +462,7 @@ function App() {
           </div>
         </div>
       </div>
-    </div><HashRouter/></>
+    </div>
   );
 }
 
