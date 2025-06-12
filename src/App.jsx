@@ -29,6 +29,14 @@ function App() {
   // Ref for response container to scroll to bottom on new messages
   const responseContainerRef = useRef(null);
 
+  // Function to truncate topic to 5 words
+  const truncateTopicTo5Words = (text) => {
+    if (!text) return "";
+    const words = text.split(/\s+/);
+    if (words.length <= 5) return text;
+    return words.slice(0, 5).join(" ") + "...";
+  };
+
   // Function to detect if a new topic has been introduced
   const isNewTopicIntroduced = (newInput, currentTopicText, conversationContext) => {
     // If this is the first message, it's definitely a new topic
@@ -200,6 +208,15 @@ function App() {
       
       // Enhanced system instruction with topic awareness
       const systemInstruction = `You are a helpful AI assistant that provides accurate and concise information. ${languageInstruction}
+      
+      IMPORTANT FORMATTING RULES:
+      - Use emojis frequently to make responses engaging and expressive 😊
+      - NEVER use asterisks (*) for emphasis or formatting
+      - NEVER use backticks (\`) or code blocks unless specifically asked for code
+      - Use natural text formatting with emojis instead of markdown symbols
+      - Make responses friendly and conversational with appropriate emojis
+      - Use emojis to highlight important points, emotions, or topics
+      
       ${newTopicDetected ? `The user has started a new topic: "${userInput}". Please respond directly to this new topic.` : 
       `The current topic is: "${currentTopic}". Continue providing information within this context.`}
       ${conversationHistory.length > 2 ? "This is a continuation of a conversation. Build upon previous responses." : ""}`;
@@ -366,7 +383,7 @@ function App() {
             {currentTopic && (
               <div className="current-topic-info">
                 <h3>Current Topic:</h3>
-                <p className="topic-text">{currentTopic}</p>
+                <p className="topic-text">{truncateTopicTo5Words(currentTopic)}</p>
                 <br/>
                 <button onClick={startNewTopic} className="new-topic-btn">Start New Topic</button>
               </div>
@@ -386,7 +403,7 @@ function App() {
                       className={`topic-item ${currentTopic === topic ? 'active-topic' : ''}`}
                       onClick={() => switchToTopic(topic)}
                     >
-                      <span className="topic-text">{truncateText(topic)}</span>
+                      <span className="topic-text">{truncateTopicTo5Words(topic)}</span>
                     </li>
                   ))}
                 </ul>
@@ -426,7 +443,7 @@ function App() {
         {currentTopic && (
           <div className="topic-indicator">
             <div className="topic-header">Current topic:</div> 
-            <div className="topic-content">{currentTopic}</div>
+            <div className="topic-content">{truncateTopicTo5Words(currentTopic)}</div>
             <button onClick={startNewTopic} className="small-btn">New Topic</button>
           </div>
         )}
