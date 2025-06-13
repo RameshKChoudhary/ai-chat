@@ -194,7 +194,7 @@ function App() {
 
     try {
       const apiUrl = "https://api.groq.com/openai/v1/chat/completions";
-      const apiKey = "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";
+      const apiKey = "{enter your api key}";
 
       if (!apiKey) {
         throw new Error("API key not configured. Please set REACT_APP_GROQ_API_KEY in your environment.");
